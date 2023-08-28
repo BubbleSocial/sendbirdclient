@@ -57,6 +57,14 @@ func WithAPIKey(apiKey string) ClientOption {
 	}
 }
 
+// WithBaseURL configures a client's API host URL
+func WithBaseURL(baseURL string) ClientOption {
+	return func(c *Client) error {
+		c.baseURL = baseURL
+		return nil
+	}
+}
+
 type apiRequest interface {
 	params() url.Values
 }
@@ -194,9 +202,13 @@ func (c *Client) putAndReturnJSON(config *url.URL, apiReq interface{}, resp inte
 }
 
 func (c *Client) PrepareUrl(pathEncodedUrl string) *url.URL {
+	host := constHost
+	if len(c.baseURL) > 0 {
+		host = c.baseURL
+	}
 	urlVal := &url.URL{
 		Scheme:  constScheme,
-		Host:    constHost,
+		Host:    host,
 		Path:    constVersion + pathEncodedUrl,
 		RawPath: constVersion + pathEncodedUrl,
 	}
