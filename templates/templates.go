@@ -65,6 +65,7 @@ const (
 	{{define "members"}}{{template "base" .}}/members{{end}}
 	{{define "membersWithUserID"}}{{template "members" .}}/{{.UserID}}{{end}}
 	{{define "invite"}}{{template "base" .}}/invite{{end}}
+	{{define "accept"}}{{template "base" .}}/accept{{end}}
 	{{define "hide"}}{{template "base" .}}/hide{{end}}
 	{{define "leave"}}{{template "base" .}}/leave{{end}}
 
@@ -72,6 +73,7 @@ const (
 	{{template "members"}}
 	{{template "membersWithUserID"}}
 	{{template "invite"}}
+	{{template "accept"}}
 	{{template "hide"}}
 	{{template "leave"}}
 	`
@@ -142,6 +144,7 @@ const (
 	SendbirdURLGroupChannelsMembersWithChannelURL          templateKeysGroupChannels = `members`
 	SendbirdURLGroupChannelsMembersWithChannelURLAndUserID templateKeysGroupChannels = `membersWithUserID`
 	SendbirdURLGroupChannelsInviteWithChannelURL           templateKeysGroupChannels = `invite`
+	SendbirdURLGroupChannelsAcceptWithChannelURL           templateKeysGroupChannels = `accept`
 	SendbirdURLGroupChannelsHideWithChannelURL             templateKeysGroupChannels = `hide`
 	SendbirdURLGroupChannelsLeaveWithChannelURL            templateKeysGroupChannels = `leave`
 

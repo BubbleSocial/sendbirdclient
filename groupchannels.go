@@ -5,7 +5,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/blazingorb/sendbirdclient/templates"
+	"github.com/BubbleSocial/sendbirdclient/templates"
 )
 
 type GroupChannel struct {
@@ -27,6 +27,29 @@ type LastMessage struct {
 type groupChannelsTemplateData struct {
 	ChannelURL string
 	UserID     string
+}
+
+func (c *Client) AcceptGroupChannelInvitation(channelURL string, r *AcceptGroupChannelInvitationRequest) (GroupChannel, error) {
+	pathString, err := templates.GetGroupChannelTemplate(groupChannelsTemplateData{ChannelURL: url.PathEscape(channelURL)}, templates.SendbirdURLGroupChannelsAcceptWithChannelURL)
+
+	if err != nil {
+		return GroupChannel{}, err
+	}
+
+	parsedURL := c.PrepareUrl(pathString)
+
+	result := GroupChannel{}
+
+	if err := c.postAndReturnJSON(parsedURL, r, &result); err != nil {
+		return GroupChannel{}, err
+	}
+
+	return result, nil
+}
+
+type AcceptGroupChannelInvitationRequest struct {
+	UserId     string `json:"user_id"`
+	AccessCode string `json:"access_code,omitempty"`
 }
 
 func (c *Client) CreateAGroupChannelWithURL(r *CreateAGroupChannelWithURLRequest) (GroupChannel, error) {
