@@ -40,7 +40,7 @@ func (c *Client) AcceptGroupChannelInvitation(channelURL string, r *AcceptGroupC
 
 	result := GroupChannel{}
 
-	if err := c.postAndReturnJSON(parsedURL, r, &result); err != nil {
+	if err := c.putAndReturnJSON(parsedURL, r, &result); err != nil {
 		return GroupChannel{}, err
 	}
 
