@@ -505,6 +505,7 @@ type ListMyGroupChannelsRequest struct {
 	MembersExactlyIn        []string `json:"members_exactly_in,omitempty"`
 	MembersNicknameContains []string `json:"members_nickname_contains,omitempty"`
 	MembersIncludeIn        []string `json:"members_include_in,omitempty"`
+	MemberStateFilter       string   `json:"member_state_filter,omitempty"`
 	QueryType               string   `json:"query_type,omitempty"`
 	CustomType              string   `json:"custom_type,omitempty"`
 	ChannelURLs             []string `json:"channel_urls,omitempty"`
