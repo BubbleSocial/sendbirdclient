@@ -5,7 +5,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/blazingorb/sendbirdclient/templates"
+	"github.com/BubbleSocial/sendbirdclient/templates"
 )
 
 type User struct {
@@ -65,13 +65,13 @@ type CreateAUserWithFileRequest struct {
 }
 
 func (c *Client) CreateSessionToken(userId string) (SessionToken, error) {
+	result := SessionToken{}
 	pathString, err := templates.GetUsersTemplate(usersTemplateData{UserID: url.PathEscape(userId)}, templates.SendbirdURLUsersTokenWithUserID)
 	if err != nil {
-		return User{}, err
+		return result, err
 	}
 
 	parsedURL := c.PrepareUrl(pathString)
-	result := SessionToken{}
 
 	if err := c.postAndReturnJSON(parsedURL, &CreateSessionTokenRequest{}, &result); err != nil {
 		return result, err
