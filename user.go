@@ -27,6 +27,11 @@ type usersTemplateData struct {
 	ChannelURL string
 }
 
+type SessionToken struct {
+	Token     string `json:"token"`
+	ExpiresAt int64  `json:"expires_at"`
+}
+
 func (c *Client) CreateAUserWithURL(r *CreateAUserWithURLRequest) (User, error) {
 	if r.UserID == "" {
 		return User{}, errors.New("user: UserID missing")
@@ -57,6 +62,26 @@ type CreateAUserWithFileRequest struct {
 	NickName         string `json:"nickname"`
 	ProfileFile      string `json:"profile_file"`
 	IssueAccessToken bool   `json:"issue_access_token,omitempty"`
+}
+
+func (c *Client) CreateSessionToken(userId string) (SessionToken, error) {
+	pathString, err := templates.GetUsersTemplate(usersTemplateData{UserID: url.PathEscape(userId)}, templates.SendbirdURLUsersTokenWithUserID)
+	if err != nil {
+		return User{}, err
+	}
+
+	parsedURL := c.PrepareUrl(pathString)
+	result := SessionToken{}
+
+	if err := c.postAndReturnJSON(parsedURL, &CreateSessionTokenRequest{}, &result); err != nil {
+		return result, err
+	}
+
+	return result, nil
+}
+
+type CreateSessionTokenRequest struct {
+	ExpiresAt int64 `json:"expires_at,omitempty"`
 }
 
 func (c *Client) ListUsers(r *ListUsersRequest) (ListUsersResponse, error) {

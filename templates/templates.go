@@ -10,6 +10,7 @@ type templateKeysMessages string
 const (
 	SendbirdURLUsersTemplate = `
 	{{define "base"}}/users/{{.UserID}}{{end}}
+	{{define "token"}}{{template "base" .}}/token{{end}}
 	{{define "unreadCount"}}{{template "base" .}}/unread_count{{end}}
 	{{define "block"}}{{template "base" .}}/block{{end}}
 	{{define "blockWithTargetID"}}{{template "block" .}}/{{.TargetID}}{{end}}
@@ -113,6 +114,7 @@ const (
 const (
 	//Users
 	SendbirdURLUserswithUserID                                    templateKeysUsers = `base`
+	SendbirdURLUsersTokenWithUserID                               templateKeysUsers = `token`
 	SendbirdURLUsersUnreadCountWithUserID                         templateKeysUsers = `unreadCount`
 	SendbirdURLUsersBlockWithUserID                               templateKeysUsers = `block`
 	SendbirdURLUsersBlockWithUserIDandTargetID                    templateKeysUsers = `blockWithTargetID`
